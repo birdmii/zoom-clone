@@ -7,11 +7,18 @@ const form = welcome.querySelector("form");
 room.hidden = true;
 let roomNm;
 
+function addMessage(msg) {
+  const ul = room.querySelector("ul");
+  const li = document.createElement("li");
+  li.innerText = msg;
+  ul.appendChild(li);
+}
+
 function showRoom() {
   welcome.hidden = true;
   room.hidden = false;
   const h3 = room.querySelector("h3");
-  h3.innerText = `Chat Room Name🍕 ${roomNm}`;
+  h3.innerText = `🍕 Chat Room Name ${roomNm}`;
 }
 
 function handleRoomSubmit(e) {
@@ -23,3 +30,7 @@ function handleRoomSubmit(e) {
 }
 
 form.addEventListener("submit", handleRoomSubmit);
+
+socket.on("welcome", () => {
+  addMessage("Someone joined!");
+});
