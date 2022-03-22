@@ -22,13 +22,16 @@ const handleListen = () => console.log(`Listening on http://localhost:${PORT}`);
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
+const sockets = [];
+
 wss.on("connection", (socket) => {
+  sockets.push(socket);
   console.log("Connected to the Browser ✅");
   socket.on("close", () => "Disconnected from Server");
   socket.on("message", (msg) => {
     console.log(msg.toString("utf-8"));
+    sockets.forEach(eachSocket => eachSocket.send(msg.toString("utf-8")))
   });
-  socket.send("Welcome!");
 });
 
 server.listen(PORT, handleListen);
