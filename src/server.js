@@ -24,20 +24,23 @@ const wsServer = new Server(httpServer);
 
 wsServer.on("connection", (socket) => {
   socket.onAny((event) => console.log(`Socket Event: ${event}`));
-  socket.on("enter_room", (roomNm, done) => {
+  socket.on("enter_room", (roomNm, nickname, done) => {
     socket.join(roomNm);
+    socket["nickname"] = nickname;
     done();
-    socket.to(roomNm).emit("welcome");
+    socket.to(roomNm).emit("welcome", socket.nickname);
   });
 
   socket.on("disconnecting", () => {
-    socket.rooms.forEach((room) => socket.to(room).emit("bye"));
+    socket.rooms.forEach((room) => socket.to(room).emit("bye", socket.nickname));
   });
 
   socket.on("new_message", (msg, room, done) => {
-    socket.to(room).emit("new_message", msg);
+    socket.to(room).emit("new_message", `${socket.nickname}: ${msg}`);
     done();
-  })
+  });
+
+  socket.on("nickname", (nickname) => (socket["nickname"] = nickname));
 });
 
 // const wss = new WebSocketServer({ server });
