@@ -28,10 +28,13 @@ function handleMessageSubmit(e) {
 function showRoom() {
   welcome.hidden = true;
   room.hidden = false;
-  const h3 = room.querySelector("h3");
-  h3.innerText = `🍕 This chat room ${roomNm}`;
   const msgForm = room.querySelector("#msg");
   msgForm.addEventListener("submit", handleMessageSubmit);
+}
+
+function showRoomInfo(newCount) {
+  const h3 = room.querySelector("h3");
+  h3.innerText = `🍕 This chat room ${roomNm} (${newCount})`;
 }
 
 function handleRoomSubmit(e) {
@@ -46,11 +49,13 @@ function handleRoomSubmit(e) {
 
 form.addEventListener("submit", handleRoomSubmit);
 
-socket.on("welcome", (nickname) => {
+socket.on("welcome", (nickname, newCount) => {
+  showRoomInfo(newCount);
   addMessage(`📢 ${nickname} joined 💫`);
 });
 
-socket.on("bye", (nickname) => {
+socket.on("bye", (nickname, newCount) => {
+  showRoomInfo(newCount);
   addMessage(`📢 ${nickname} has left 🚪`);
 });
 
