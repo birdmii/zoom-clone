@@ -1,5 +1,6 @@
 import express from "express";
 import { Server } from "socket.io";
+import { instrument } from "@socket.io/admin-ui";
 import http from "node:http";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -20,7 +21,16 @@ app.get("/*", (_, res) => res.redirect("/"));
 const handleListen = () => console.log(`Listening on http://localhost:${PORT}`);
 // app.listen(PORT, handleListen);
 const httpServer = http.createServer(app);
-const wsServer = new Server(httpServer);
+const wsServer = new Server(httpServer, {
+  cors: {
+    origin: ["https://admin.socket.io"],
+    credentials: true,
+  },
+});
+
+instrument(wsServer, {
+  auth: false,
+});
 
 function publicRooms() {
   const { sids, rooms } = wsServer.sockets.adapter;
@@ -65,27 +75,14 @@ wsServer.on("connection", (socket) => {
   });
 
   socket.on("nickname", (nickname) => (socket["nickname"] = nickname));
+
+  socket.on("nickname_change", (nickname, done) => {
+    const originalNickname = socket["nickname"];
+    socket["nickname"] = nickname;
+    socket.rooms.forEach((room) => {
+      socket.to(room).emit("nickname_change", originalNickname, socket.nickname);
+    });
+  });
 });
-
-// const wss = new WebSocketServer({ server });
-// const sockets = [];
-
-// wss.on("connection", (socket) => {
-//   sockets.push(socket);
-//   socket["nickname"] = "Anonymous"
-//   console.log("Connected to the Browser ✅");
-//   socket.on("close", () => "Disconnected from Server");
-//   socket.on("message", (msg) => {
-//     const parsedMsg = JSON.parse(msg);
-//     switch (parsedMsg.type) {
-//       case "message":
-//         sockets.forEach((eachSocket) => eachSocket.send(`${socket.nickname}: ${parsedMsg.payload}`));
-//         break;
-//       case "nickname":
-//         socket["nickname"] = parsedMsg.payload;
-//         break;
-//     }
-//   });
-// });
 
 httpServer.listen(PORT, handleListen);
