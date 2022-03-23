@@ -10,24 +10,9 @@ html(lang="en")
     header 
       h1 Z👀M
     main 
-      div#welcome
-        form
-          input(name="roomname", placeholder="roomname", required, type="text")
-          input(name="nickname", placeholder="nickname" required, type="text")
-          button Enter Room
-
-        h4 💬 Chat Room List
-        ul 
-
-      div#nickname
-          form
-            input(name="nickname", placeholder="nickname" required, type="text")
-            button Change Nickname
-      div#room
-        h3
-        ul 
-        form#msg
-          input(placeholder="message" required, type="text")
-          button Send 
+      div#myStream
+        video#myFace(autoplay, playsinline, width="400", height="400")
+        button#mute Mute 
+        button#camera Tun Camera Off
     script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js")
