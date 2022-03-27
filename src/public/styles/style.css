@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+  /* --primary: rgb(75, 226, 108); */
+  --primary: #ffeb3b;
+  --dark-primary: #fbc02d;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 2rem 1rem;
+}
+
+main {
+  padding: 0 1rem;
+}
+
+#welcome {
+  display: flex;
+  justify-content: center;
+}
+
+#welcome form {
+  width: 360px;
+  text-align: center;
+  margin-top: 150px;
+}
+
+#welcome input {
+  width: 100%;
+  height: 56px;
+  font-size: 18px;
+}
+
+#welcome input:focus {
+  outline: 0;
+}
+
+#welcome button {
+  width: 100%;
+  background-color: var(--primary);
+  border: var(--primary);
+}
+
+#alertMsg {
+  display: none;
+  border: 1px solid rgb(49, 49, 49);
+  background-color: hsl(34, 100%, 60%);
+  color: #000;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+#call {
+  display: flex !important;
+}
+
+#myStream {
+  display: flex;
+  flex-direction: column;
+}
+
+#myStream > video {
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+#mySetting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+#cameras {
+  margin-bottom: 0;
+  height: 60px;
+}
+
+#mute {
+  margin: 0 10px;
+}
+
+#mute,
+#camera {
+  border-radius: 5px;
+  height: 60px;
+  width: 60px;
+  padding: 0;
+  font-size: 24px;
+  background-color: var(--primary);
+  border: var(--primary);
+}
+
+#message {
+  color: rgb(17, 17, 17);
+  width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px 0px 20px 10px;
+  position: relative;
+}
+
+#message ul {
+  padding: 0 10px;
+  padding-inline-start: 0;
+  height: 530px;
+  overflow-y: scroll;
+}
+
+#message li {
+  padding: 5px 10px;
+  list-style-type: none;
+  display: table;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.me {
+  background-color: var(--primary);
+  margin-right: 0px;
+  margin-left: auto;
+}
+
+.you {
+  background-color: var(--dark-primary);
+}
+
+#message form {
+  bottom: 10px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 380px;
+  padding: 0.5rem;
+}
+
+#message textarea {
+  margin-bottom: 0;
+  resize: none;
+  height: 90px;
+  border: none;
+}
+
+#message textarea:focus {
+  outline: none;
+}
+
+#message button {
+  background-color: var(--primary);
+  border: var(--primary);
+  padding: 2rem 1rem;
+  margin: 0;
+  height: 90px;
+}

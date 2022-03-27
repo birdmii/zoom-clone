@@ -6,20 +6,29 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title Z👀M
     link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+    link(rel="stylesheet" href="/public/styles/style.css") 
   body 
     header 
       h1 Z👀M
     main 
       div#welcome
         form
-          input(placeholder="room name", type="text", required)
-          button Enter Room
+          input(placeholder="Room Name" type="text", required)
+          button Enter Room 👋
+          div#alertMsg 
       div#call
         div#myStream
-          video#myFace(autoplay, playsinline, width="400", height="400")
-          button#mute Mute 
-          button#camera Camera Off
-          select#cameras
-          video#peerFace(autoplay, playsinline, width="400", height="400")
+          video#peerFace(autoplay, playsinline, width="400" height="300")
+          video#myFace(autoplay, playsinline, width="400" height="300")
+          div#mySetting
+            select#cameras
+            button#mute 🙊 
+            button#camera 🙈
+        div#message
+          ul 
+          form
+            textarea(name="", cols="30", rows="3" placeholder="Message" type="text", required)
+            button Send
+
     script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js")
